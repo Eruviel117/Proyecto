@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Visualizador interactivo de la recta numérica para clasificar números reales">
     <meta name="keywords" content="matemáticas, números reales, recta numérica, clasificación, álgebra">
+    <script src="/actividades/actividad02/script.js"></script>
     <meta name="author" content="M. en C. Jorge J. Pedrozo Romero">
     
     <!-- ==================== TÍTULO Y ESTILOS ==================== -->
@@ -13,600 +14,415 @@
 <style>
 
 /* ==================== RESET BÁSICO ==================== */
+/* ========================
+   RESET + VARIABLES
+======================== */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-/* ==================== TIPOGRAFÍA Y LAYOUT BASE ==================== */
+:root {
+  --negro: #000000;
+  --gris-oscuro: #141414;
+  --gris: #282828;
+  --morado-oscuro: #230046;
+  --morado: #320064;
+  --texto: #e3e3e3;
+
+  /* accents derived */
+  --morado-claro: #6a00cc;
+  --input-bg: #0f0f12;
+  --card-bg: #1b1b1b;
+  --muted: rgba(227,227,227,0.65);
+  --shadow-strong: 0 10px 30px rgba(0,0,0,0.6);
+}
+
+/* ========================
+   BODY / LAYOUT
+======================== */
+html, body { height: 100%; }
 body {
-    font-family: Arial, sans-serif;
-    line-height: 1.4;
- background: #000000;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #434343, #000000);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #434343, #000000); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-    color: black;
-    
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: linear-gradient(to right, var(--negro), var(--gris-oscuro));
+  color: var(--texto);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.45;
 }
 
+/* center main container area */
 .container {
-    
-background: #34e89e;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #0f3443, #34e89e);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #0f3443, #34e89e); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-    border: 2px solid black;
-    max-width: 800px;
-    margin: 40px auto;
-    
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgb(255, 255, 255);
-    padding: 30px;
+  max-width: 900px;
+  margin: 36px auto;
+  padding: 0; /* container inner padding handled in child */
+  width: calc(100% - 32px);
 }
 
-/* ==================== ENCABEZADO ==================== */
+/* ========================
+   HEADER (full width, not too tall)
+======================== */
 .header {
- background: #34e89e;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #0f3443, #34e89e);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #0f3443, #34e89e); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-text-align: center;
-    color: white;
-        padding: 3rem 2rem;
-    box-shadow: 0 2px 10px rgb(255, 255, 255);
+  width: 100%;
+  background: linear-gradient(to right, #2F0743, #41295a); /* morado gradient */
+  color: #fff;
+  text-align: center;
+  padding: 18px 16px; /* not very high */
+  box-shadow: 0 4px 18px rgba(0,0,0,0.6);
+  margin-bottom: 20px;
 }
 
-.header h1 {
-    font-size: 24px;
-    margin-bottom: 10px;
+/* header title */
+.header h1 { font-size: 24px; margin-bottom: 10px; }
+.header a {
+  display: inline-block;
+  margin-top: 6px;
+  color: rgba(255,255,255,0.9);
+  text-decoration: underline;
+  font-size: 0.95rem;
 }
 
-.header p {
-    font-size: 14px;
-    margin: 5px 0;
-}
-
-/* ==================== CONTENIDO PRINCIPAL ==================== */
+/* ========================
+   INNER PANEL (replaces .container original gradient)
+   use a consistent dark card for content
+======================== */
 .main-content {
-    padding: 20px;
+  background: var(--gris);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+  border: 1px solid rgba(255,255,255,0.03);
+}
+.btn-morado {
+    background: linear-gradient(90deg, #230046, #320064);
+    color: white;
+    border: none;
+    padding: 14px 28px;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    box-shadow: 0 0 15px rgba(50, 0, 100, 0.6);
 }
 
-/* ==================== CONTROLES ==================== */
+.btn-morado:hover {
+    background: linear-gradient(90deg, #4d0099, #6a00cc);
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(100, 0, 180, 0.8);
+}
+
+/* ========================
+   CONTROLS PANEL
+======================== */
 .controls {
-    border: 2px solid black;
-    padding: 20px;
-    margin-bottom: 20px;
+  background: var(--card-bg);
+  border-radius: 10px;
+  padding: 18px;
+  margin-bottom: 18px;
+  border: 1px solid rgba(255,255,255,0.03);
+  color: var(--texto);
 }
 
-.controls h2 {
-    font-size: 18px;
-    margin-bottom: 15px;
-    color: black;
+/* section titles */
+.controls h2,
+.number-line-container h2,
+.info-panel h3 {
+  color: var(--texto);
+  font-size: 1.05rem;
+  margin-bottom: 12px;
+  font-weight: 700;
 }
 
-.input-group {
-    margin-bottom: 20px;
-}
-
-.input-field {
-    margin-bottom: 10px;
-}
+/* ========================
+   INPUTS
+======================== */
+.input-group { margin-bottom: 14px; }
 
 .input-field label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
-    color: black;
+  display: block;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: var(--muted);
 }
 
 .input-field input {
-    width: 300px;
-    padding: 8px;
-    border: 2px solid black;
-    font-size: 14px;
+  width: 100%;
+  max-width: 420px;
+  padding: 10px 12px;
+  background: var(--input-bg);
+  color: var(--texto);
+  border: 1px solid rgba(255,255,255,0.04);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: box-shadow .16s ease, border-color .16s ease, transform .12s ease;
+  font-family: "Courier New", monospace;
 }
 
 .input-field input:focus {
-    outline: none;
-    border-color: blue;
+  outline: none;
+  border-color: var(--morado-claro);
+  box-shadow: 0 8px 30px rgba(106,0,204,0.15);
+  transform: translateY(-1px);
 }
 
-.input-help {
-    display: block;
-    color: black;
-    font-size: 12px;
-    margin-top: 5px;
-}
+/* help text */
+.input-help { display: block; color: rgba(227,227,227,0.6); font-size: 0.85rem; margin-top: 8px; }
 
-/* ==================== BOTONES ==================== */
-.button-group {
-    margin-top: 10px;
-}
+/* ========================
+   BUTTONS - unified morado gradient style
+======================== */
+.button-group { margin-top: 10px; }
 
 .btn {
-    padding: 10px 20px;
-    font-size: 14px;
-    font-weight: bold;
-    border: 2px solid black;
-    cursor: pointer;
-    margin-right: 10px;
-    margin-bottom: 5px;
-}
-
-.btn-primary {
-    background-color: blue;
-    color: white;
-}
-
-.btn-danger {
-    background-color: red;
-    color: white;
+  padding: 10px 18px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  border-radius: 10px;
+  cursor: pointer;
+  border: none;
+  color: white;
+  background: linear-gradient(90deg, var(--morado-oscuro), var(--morado));
+  box-shadow: 0 10px 30px rgba(50,0,100,0.35);
+  transition: transform .16s ease, box-shadow .16s ease, background .16s ease;
+  display: inline-block;
+  margin-right: 8px;
+  margin-bottom: 8px;
 }
 
 .btn:hover {
-    background-color: black;
-    color: white;
+  background: linear-gradient(90deg, #4d0099, #6a00cc);
+  transform: translateY(-3px);
+  box-shadow: 0 18px 44px rgba(100,0,180,0.42);
 }
 
-/* ==================== NÚMEROS PREDEFINIDOS ==================== */
-.preset-section {
-    margin-top: 20px;
+/* primary vs danger variants keep same semantic but morphed to palette */
+.btn-primary {
+  /* same as .btn (kept for compatibility) */
 }
 
-.preset-section h3 {
-    font-size: 16px;
-    margin-bottom: 10px;
-    color: black;
+.btn-danger {
+  background: linear-gradient(90deg, #9b0033, #6a0033);
+  box-shadow: 0 10px 30px rgba(106,0,51,0.28);
+}
+.btn-danger:hover {
+  background: linear-gradient(90deg, #c0004d, #8a003b);
 }
 
-.preset-description {
-    margin-bottom: 15px;
-    color: black;
-    font-size: 14px;
-}
-
-.preset-numbers {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 5px;
-}
+/* ========================
+   PRESET BUTTONS (small)
+======================== */
+.preset-numbers { display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; }
 
 .preset-btn {
-    padding: 5px 10px;
-    border: 2px solid black;
-    cursor: pointer;
-    font-size: 12px;
-    font-weight: bold;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-weight:700;
+  font-size:0.9rem;
+  cursor:pointer;
+  border: 1px solid rgba(255,255,255,0.05);
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  color: var(--texto);
 }
-
-.preset-btn.rational {
-    background-color: white;
-    color: black;
-}
-
-.preset-btn.irrational {
-    background-color: white;
-    color: black;
-}
-
 .preset-btn:hover {
-    background-color: black;
-    color: white;
+  background: linear-gradient(90deg, var(--morado-oscuro), var(--morado));
+  color: #fff;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 28px rgba(50,0,100,0.32);
 }
 
-/* ==================== RECTA NUMÉRICA ==================== */
+/* rational / irrational visual distinction (subtle) */
+.preset-btn.rational { background: rgba(255,255,255,0.02); }
+.preset-btn.irrational { background: rgba(255,255,255,0.01); }
+
+/* ========================
+   NUMBER LINE
+======================== */
 .number-line-container {
-    border: 2px solid black;
-    padding: 20px;
-    margin-bottom: 20px;
-}
-
-.number-line-container h2 {
-    font-size: 18px;
-    margin-bottom: 15px;
-    text-align: center;
-    color: black;
+  background: var(--card-bg);
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 18px;
+  border: 1px solid rgba(255,255,255,0.03);
 }
 
 .number-line {
-    width: 100%;
-    height: 100px;
-    position: relative;
-    background-color: white;
-    border: 1px solid black;
-    margin: 20px 0;
+  width: 100%;
+  height: 120px;
+  position: relative;
+  background: linear-gradient(180deg, #0e0e10, #161618);
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.03);
+  margin-top: 12px;
 }
 
+/* the central line */
 .line {
-    position: absolute;
-    top: 48px;
-    left: 5%;
-    right: 5%;
-    height: 4px;
-    background-color: black;
+  position: absolute;
+  top: 56px;
+  left: 5%;
+  right: 5%;
+  height: 3px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
 }
 
+/* tick marks */
 .tick {
-    position: absolute;
-    width: 2px;
-    height: 20px;
-    background-color: black;
-    top: 38px;
+  position: absolute;
+  width: 2px;
+  height: 18px;
+  background: rgba(255,255,255,0.18);
+  top: 46px;
 }
 
+/* tick labels */
 .tick-label {
-    position: absolute;
-    top: 65px;
-    font-size: 12px;
-    font-weight: bold;
-    color: black;
-    transform: translateX(-50%);
+  position: absolute;
+  top: 72px;
+  font-size: 12px;
+  color: rgba(227,227,227,0.8);
+  transform: translateX(-50%);
 }
 
-.range-info {
-    text-align: center;
-    margin-top: 10px;
-}
-
-.range-info small {
-    color: black;
-    font-size: 12px;
-}
-
-/* ==================== PUNTOS EN LA RECTA ==================== */
+/* point markers */
 .number-point {
-    position: absolute;
-    width: 16px;
-    height: 16px;
-    top: 40px;
-    transform: translateX(-50%);
-    border: 2px solid black;
-    cursor: pointer;
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.08);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.6);
 }
 
-.number-point.naturals {
-    background-color: red;
-}
+/* category colors: use morado palette variations */
+.number-point.naturals { background: linear-gradient(90deg, var(--morado-claro), var(--morado)); }
+.number-point.integers { background: linear-gradient(90deg, var(--morado-oscuro), var(--morado-claro)); }
+.number-point.rationals { background: linear-gradient(90deg, #4d0099, #6a00cc); }
+.number-point.irrationals { background: linear-gradient(90deg, #b266ff, #8a4dff); }
 
-.number-point.integers {
-    background-color: blue;
-}
-
-.number-point.rationals {
-    background-color: green;
-}
-
-.number-point.irrationals {
-    background-color: yellow;
-}
-
+/* label for points */
 .point-label {
-    position: absolute;
-    top: -25px;
-    transform: translateX(-50%);
-    background-color: white;
-    border: 1px solid black;
-    padding: 2px 4px;
-    font-size: 10px;
-    font-weight: bold;
-    white-space: nowrap;
+  position: absolute;
+  top: -28px;
+  transform: translateX(-50%);
+  background: rgba(255,255,255,0.03);
+  color: var(--texto);
+  padding: 4px 6px;
+  border-radius: 6px;
+  font-size: 11px;
+  border: 1px solid rgba(255,255,255,0.03);
+  white-space: nowrap;
 }
 
-/* ==================== PANELES DE INFORMACIÓN ==================== */
+/* ========================
+   INFO PANELS
+======================== */
 .info-panels {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 12px;
+  margin-top: 14px;
 }
 
 .info-panel {
-    border: 2px solid black;
-    padding: 15px;
+  background: var(--card-bg);
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.03);
 }
 
 .info-panel h3 {
-    font-size: 16px;
-    margin-bottom: 15px;
-    color: black;
-    border-bottom: 2px solid black;
-    padding-bottom: 5px;
+  color: var(--texto);
+  margin-bottom: 10px;
 }
 
-/* ==================== CLASIFICACIÓN ==================== */
-.classification-legend {
-    margin-bottom: 20px;
-}
-
-.legend-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin: 10px 0;
-    padding: 5px;
-}
-
+/* legend colors (subtle morado accents) */
 .legend-color {
-    width: 20px;
-    height: 20px;
-    border: 2px solid black;
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  border: 1px solid rgba(255,255,255,0.05);
 }
+.legend-color.naturals { background: linear-gradient(90deg, var(--morado), var(--morado-claro)); }
+.legend-color.integers { background: linear-gradient(90deg, var(--morado-oscuro), var(--morado)); }
+.legend-color.rationals { background: linear-gradient(90deg, #6a00cc, #8a4dff); }
+.legend-color.irrationals { background: linear-gradient(90deg, #b266ff, #dab6ff); }
 
-.legend-color.naturals {
-    background-color: red;
+/* ========================
+   DISTANCE CALCULATOR AREA
+======================== */
+.distance-calculator .select-selected,
+.distance-calculator .select-items div {
+  background: var(--input-bg);
+  color: var(--texto);
+  border: 1px solid rgba(255,255,255,0.04);
+  border-radius: 8px;
+  padding: 8px 10px;
 }
-
-.legend-color.integers {
-    background-color: blue;
-}
-
-.legend-color.rationals {
-    background-color: green;
-}
-
-.legend-color.irrationals {
-    background-color: yellow;
-}
-
-.classification-info h4 {
-    font-size: 14px;
-    margin: 15px 0 10px 0;
-    color: black;
-}
-
-.classification-info ul {
-    margin-left: 20px;
-}
-
-.classification-info li {
-    margin: 5px 0;
-    font-size: 12px;
-}
-
-/* ==================== LISTA DE PUNTOS ==================== */
-.points-list {
-    min-height: 200px;
-}
-
-.empty-state p {
-    font-size: 14px;
-    color: black;
-    text-align: center;
-    margin: 20px 0;
-}
-
-.empty-state small {
-    display: block;
-    text-align: center;
-    font-size: 12px;
-    color: black;
-}
-
-.point-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    margin: 5px 0;
-    border: 1px solid black;
-}
-
-.point-item strong {
-    font-weight: bold;
-}
-
-.point-item small {
-    font-size: 11px;
-}
-
-/* ==================== CALCULADORA DE DISTANCIAS ==================== */
-.calculator-description {
-    margin-bottom: 15px;
-    font-size: 13px;
-    color: black;
-}
-
-.distance-inputs {
-    margin-bottom: 20px;
-}
-
-.distance-field {
-    margin-bottom: 15px;
-}
-
-.distance-field label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
-    color: black;
-}
-
-.custom-select {
-    position: relative;
-    width: 100%;
-}
-
-.select-selected {
-    padding: 8px 30px 8px 10px;
-    border: 2px solid black;
-    background-color: white;
-    cursor: pointer;
-    font-size: 14px;
-}
-
-.select-selected:after {
-    content: "▼";
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 10px;
-}
-
-.select-items {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background-color: white;
-    border: 2px solid black;
-    border-top: none;
-    z-index: 1000;
-    max-height: 150px;
-    overflow-y: auto;
-    display: none;
-}
-
-.select-items.show {
-    display: block;
-}
-
-.select-items div {
-    padding: 8px 10px;
-    cursor: pointer;
-    border-bottom: 1px solid black;
-    font-size: 13px;
-}
-
-.select-items div:last-child {
-    border-bottom: none;
-}
-
-.select-items div:hover {
-    background-color: blue;
-    color: white;
-}
-
-.select-items div.selected {
-    background-color: green;
-    color: white;
-}
-
 .distance-btn {
-    width: 100%;
-    padding: 12px;
-    background-color: blue;
-    color: white;
-    border: 2px solid black;
-    font-size: 14px;
-    font-weight: bold;
-    cursor: pointer;
-    margin-bottom: 15px;
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  background: linear-gradient(90deg, var(--morado-oscuro), var(--morado));
+  color: #fff;
+  border: none;
+  font-weight: 700;
+  box-shadow: 0 10px 30px rgba(50,0,100,0.35);
 }
-
 .distance-btn:hover {
-    background-color: black;
+  background: linear-gradient(90deg, #4d0099, #6a00cc);
+  transform: translateY(-3px);
 }
 
-.distance-placeholder {
-    text-align: center;
-    padding: 20px;
-    border: 1px solid black;
-}
-
-.placeholder-icon {
-    font-size: 24px;
-    margin-bottom: 10px;
-}
-
+/* placeholder / result styles */
+.distance-placeholder,
 .distance-result {
-    padding: 15px;
-    border: 2px solid green;
-    background-color: white;
-    font-size: 14px;
-    text-align: center;
+  margin-top: 12px;
+  padding: 12px;
+  border-radius: 8px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
+  border: 1px solid rgba(255,255,255,0.03);
+  color: var(--texto);
 }
 
-/* ==================== PIE DE PÁGINA ==================== */
+/* ========================
+   FOOTER (full width, not tall)
+======================== */
 .footer {
-    background: #34e89e;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #0f3443, #34e89e);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #0f3443, #34e89e); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-    color: white;
-    padding: 15px;
+  width: 100%;
+  background: linear-gradient(to right, #2F0743, #41295a);
+  color: #fff;
+  padding: 12px 14px;
+  margin-top: 20px;
+  box-shadow: 0 -6px 22px rgba(0,0,0,0.6);
 }
 
-.footer-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-}
-
-.footer-info p {
-    margin: 5px 0;
-    font-size: 12px;
-}
-
-.footer-links {
-    display: flex;
-    gap: 15px;
-}
-
+/* footer links/buttons */
 .footer-links a {
-    color: white;
-    text-decoration: none;
-    font-size: 12px;
-    border: 1px solid white;
-    padding: 5px 10px;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.06);
+  padding: 6px 10px;
+  border-radius: 8px;
+  text-decoration: none;
 }
-
 .footer-links a:hover {
-    background-color: white;
-    color: black;
+  background: rgba(255,255,255,0.06);
+  color: #fff;
 }
 
-/* ==================== Z-INDEX PARA DROPDOWNS ==================== */
-.distance-field:first-child {
-    z-index: 200;
+/* ========================
+   RESPONSIVE
+======================== */
+@media (max-width: 900px) {
+  .input-field input { max-width: 100%; width: 100%; }
+  .number-line { height: 110px; }
+  .container { margin: 18px; }
+  .main-content { padding: 16px; }
 }
 
-.distance-field:first-child .select-items {
-    z-index: 1200;
-}
-
-.distance-field:last-child {
-    z-index: 100;
-}
-
-.distance-field:last-child .select-items {
-    z-index: 1100;
-}
-
-/* ==================== RESPONSIVE BÁSICO ==================== */
-@media (max-width: 768px) {
-    .container {
-        margin: 5px;
-    }
-
-    .main-content {
-        padding: 10px;
-    }
-
-    .input-field input {
-        width: 100%;
-        max-width: 300px;
-    }
-
-    .preset-numbers {
-        justify-content: center;
-    }
-
-    .info-panels {
-        grid-template-columns: 1fr;
-    }
-
-    .footer-content {
-        flex-direction: column;
-        gap: 10px;
-        text-align: center;
-    }
-
-    .footer-links {
-        justify-content: center;
-    }
-}
 </style>
 
 
@@ -616,16 +432,22 @@ background: linear-gradient(to right, #0f3443, #34e89e); /* W3C, IE 10+/ Edge, F
     <header class="header">
             <div class="header-content">
                 <h1>Visualizador de la Recta Numérica</h1>
-               
+            <button onclick="window.location.href='file:///C:/Users/eruvi/OneDrive/Documentos/Universidad/Algebra/Git-Hub/Proyecto/Index.html'" 
+        class="btn-morado">
+    INICIO 
+</button>
+
+
+
         </header>
-    <!-- ==================== CONTENEDOR PRINCIPAL ==================== -->
+    
     <div class="container">
         
 
-        <!-- ==================== CONTENIDO PRINCIPAL ==================== -->
+        
         <main class="main-content">
             
-            <!-- ==================== SECCIÓN DE CONTROLES ==================== -->
+            
             <section class="controls" aria-label="Controles de entrada">
                 <h2>Controles de Entrada</h2>
                 
@@ -857,7 +679,7 @@ background: linear-gradient(to right, #0f3443, #34e89e); /* W3C, IE 10+/ Edge, F
                         <strong>Fundamentos de Álgebra</strong> • 1° Cuatrimestre 2025
                     </p>
                     <p>
-                         <strong>M. en C. Jorge J. Pedrozo Romero</strong> • 
+                        <strong>M. en C. Jorge J. Pedrozo Romero</strong> • 
                         <strong>Tecnológico de Software</strong>
                     </p>
                     <p>
@@ -869,11 +691,8 @@ background: linear-gradient(to right, #0f3443, #34e89e); /* W3C, IE 10+/ Edge, F
                 </div>
             </div>
         </footer>
-
 <script>
-
-// ========== VARIABLES GLOBALES ==========
-let points = [];
+    let points = [];
 let currentRange = 10;
 
 // ========== CONSTANTES MATEMÁTICAS ==========
@@ -1755,6 +1574,7 @@ initCustomSelects();
 // Mostrar la visualización inicial
 updateDisplay();
 </script>
+
 </body>
 </html>
 

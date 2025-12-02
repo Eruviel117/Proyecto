@@ -4,217 +4,269 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/actividades/actividad12/script.js"></script>
     <title>División sintética</title>
 <style>
-    * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* ========================
+   RESET + PALETA
+   (#000000, #141414, #282828, #230046, #320064)
+======================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
+:root {
+  --negro: #000000;
+  --gris-oscuro: #141414;
+  --gris: #282828;
+  --morado-oscuro: #230046;
+  --morado: #320064;
+  --texto: #e3e3e3;
+  --card-bg: #121212;
+  --muted: rgba(227,227,227,0.6);
+}
+
+/* ========================
+   BODY / BACKGROUND
+======================== */
+html, body { height: 100%; }
 body {
-background: #11998e;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #38ef7d, #11998e);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #38ef7d, #11998e); 
-    min-height: 100vh;
-    
-    /* display: flex; */
-    justify-content: center;
-    align-items: center;
-    box-shadow: 10 2px 10px rgb(255, 255, 255);
-    
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  min-height: 100vh;
+  background: linear-gradient(to right, var(--negro), var(--gris-oscuro));
+  color: var(--texto);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.6;
 }
-header{
-background: #00bf8f;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #001510, #00bf8f);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #001510, #00bf8f); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+/* ========================
+   HEADER
+   (gradiente morado)
+======================== */
+header {
+  background: linear-gradient(to right, #2F0743, #41295a);
   text-align: center;
-    color:#ffffff;
-    padding: 20px;
-    
-
+  color: #fff;
+  padding: 24px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+  border-radius: 8px;
+  margin: 18px auto;
+  max-width: 900px;
 }
 
+header h1 { font-size: 1.6rem; margin-bottom: 6px; font-weight: 700; }
+.subtitle { color: rgba(255,255,255,0.9); font-size: 0.95rem; }
+
+/* ========================
+   CONTAINER
+======================== */
 .container {
-    background: #087322;
-    border-radius: 8px;
-    padding: 40px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    max-width: 800px;
-    width: 100%;
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius: 12px;
+  padding: 28px;
+  max-width: 800px;
+  margin: 20px auto;
+  box-shadow: 0 12px 36px rgba(0,0,0,0.6);
+  border: 1px solid rgba(255,255,255,0.03);
 }
 
+/* ========================
+   TITULOS
+======================== */
+h3 { color: var(--morado); text-align:center; margin-bottom:12px; font-size:1.1rem; font-weight:700; }
 
-h1 {
-    color: #dae7eb;
-    text-align: center;
-    margin-bottom: 10px;
-    font-size: 1.8em;
-    font-weight: 600;
-}
-h3 {
-    color: #00bc29;
-    text-align: center;
-    margin-bottom: 10px;
-    font-size: 1.2em;
-    font-weight: 600;
-    
-    
-}
-
-
-.subtitle {
-     
-    text-align: center;
-    color: #0d260d;
-    margin-bottom: 30px;
-    font-size: 0.9em;
-}
-
-.input-section {
-    
-    margin-bottom: 25px;
-}
-
+/* ========================
+   LABELS / HELP TEXT
+======================== */
 label {
-    
-    display: block;
-    margin-bottom: 8px;
-    color: #0d260d;
-    font-weight: 600;
+  display: block;
+  margin-bottom: 8px;
+  color: var(--texto);
+  font-weight: 600;
 }
 
 .help-text {
-    
-    font-size: 0.85em;
-    color: #666;
-    margin-top: 5px;
+  font-size: 0.85rem;
+  color: rgba(227,227,227,0.65);
+  margin-top: 6px;
 }
 
+/* ========================
+   INPUTS
+======================== */
 input[type="text"] {
-     background: #9bdb9a;
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #9bdb9a;
-    border-radius: 4px;
-    font-size: 1em;
-    transition: border-color 0.3s;
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  background: #0f0f0f;
+  color: var(--texto);
+  border: 1px solid rgba(255,255,255,0.04);
+  font-size: 1rem;
+  transition: box-shadow .18s ease, border-color .18s ease, transform .12s ease;
 }
 
 input[type="text"]:focus {
-    outline: none;
-    border-color: #333;
+  outline: none;
+  border-color: var(--morado);
+  box-shadow: 0 12px 30px rgba(50,0,100,0.28);
+  transform: translateY(-1px);
+}
+.btn-morado {
+    background: linear-gradient(90deg, #230046, #320064);
+    color: white;
+    border: none;
+    padding: 14px 28px;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    box-shadow: 0 0 15px rgba(50, 0, 100, 0.6);
 }
 
+.btn-morado:hover {
+    background: linear-gradient(90deg, #4d0099, #6a00cc);
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(100, 0, 180, 0.8);
+}
+
+/* ========================
+   BOTONES (estilo morado degradado)
+   - Mantiene ancho original (100%)
+   - Aplica hover/active similares a otras páginas
+======================== */
 button {
-    width: 100%;
-    padding: 15px;
-    background: #333;
-    color: #9bdb9a;
-    border: none;
-    border-radius: 4px;
-    font-size: 1em;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.2s;
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(90deg, var(--morado-oscuro), var(--morado));
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+  box-shadow: 0 12px 36px rgba(50,0,100,0.35);
 }
 
 button:hover {
-    background: #555;
+  background: linear-gradient(90deg, #4d0099, #6a00cc);
+  transform: translateY(-4px);
+  box-shadow: 0 18px 48px rgba(100,0,180,0.45);
 }
 
 button:active {
-    background: #222;
+  transform: translateY(0);
+  box-shadow: 0 8px 20px rgba(50,0,100,0.25);
 }
 
+/* Focus visible for accessibility */
+button:focus-visible,
+input[type="text"]:focus-visible {
+  outline: 3px solid rgba(99, 33, 126, 0.28);
+  outline-offset: 3px;
+}
+
+/* ========================
+   RESULT SECTION & TABLE
+   (color adjustments)
+======================== */
 .result-section {
-    margin-top: 30px;
-    padding: 20px;
-    background: #9bdb9a;
-    border-radius: 4px;
-    border: 1px solid #9bdb9a;
-    display: none;
+  margin-top: 24px;
+  padding: 18px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.03);
+  display: none;
 }
 
-.result-section.show {
-    display: block;
-}
+.result-section.show { display: block; }
 
-.result-title {
-    color: #333;
-    font-weight: 600;
-    margin-bottom: 15px;
-    font-size: 1.1em;
-}
+.result-title { color: var(--texto); font-weight: 700; margin-bottom: 12px; font-size: 1.05rem; }
 
 .process-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-    background: #9bdb9a;
-    border-radius: 4px;
-    overflow: hidden;
-    border: 1px solid #e0e0e0;
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 16px;
+  background: transparent;
+  border-radius: 6px;
+  overflow: hidden;
 }
 
 .process-table td {
-    padding: 10px;
-    text-align: center;
-    border: 1px solid #e0e0e0;
+  padding: 10px;
+  text-align: center;
+  border: 1px solid rgba(255,255,255,0.03);
+  color: var(--texto);
 }
 
 .process-table tr:first-child td {
-     background: #9bdb9a;
-    color: white;
-    font-weight: 500;
+  background: linear-gradient(90deg, var(--morado-oscuro), var(--morado));
+  color: #fff;
+  font-weight: 600;
 }
 
 .divisor-cell {
-    background: #9bdb9a;
-    font-weight: 500;
+  background: linear-gradient(90deg, var(--morado-oscuro), var(--morado));
+  color: #fff;
+  font-weight: 700;
 }
 
-.final-result {
-    background: #9bdb9a;
-    padding: 15px;
-    border-radius: 4px;
-    margin-top: 15px;
-    border: 1px solid #9bdb9a;
+/* ========================
+   FINAL RESULT / ERROR / EXAMPLE
+======================== */
+.final-result, .example {
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.015));
+  padding: 14px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.03);
+  color: var(--texto);
+  margin-top: 12px;
 }
 
-.final-result p {
-    margin: 8px 0;
-    color: #333;
-}
+.final-result p { margin: 8px 0; color: var(--texto); }
 
 .error {
-    background: #ffebee;
-    color: #c62828;
-    padding: 15px;
-    border-radius: 4px;
-    margin-top: 15px;
-    border: 1px solid #ffcdd2;
+  background: rgba(255, 50, 50, 0.07);
+  color: #ff8a8a;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,80,80,0.12);
+  margin-top: 12px;
 }
 
-.example {
-    background: #9bdb9a;
-    padding: 10px;
-    border-radius: 4px;
-    margin-top: 10px;
-    font-size: 0.85em;
-    border: 1px solid #e0e0e0;
-}
+/* ========================
+   TABLE CELLS / TEXT
+======================== */
+.process-table td { font-size: 0.95rem; }
+
+/* ========================
+   FOOTER
+======================== */
 footer {
-   
-   
-    background: #00350d;
-    color: white;
-    padding: 15px;
+  background: linear-gradient(to right, #2F0743, #41295a);
+  color: rgba(255,255,255,0.92);
+  padding: 14px;
+  margin-top: 18px;
+  border-radius: 8px;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 -8px 30px rgba(0,0,0,0.6);
 }
+
+/* ========================
+   RESPONSIVE
+======================== */
+@media (max-width: 768px) {
+  header h1 { font-size: 1.3rem; }
+  .container { padding: 18px; margin: 14px; }
+  input[type="text"] { font-size: 0.95rem; min-height: 44px; }
+  button { padding: 12px; font-size: 0.95rem; }
+}
+
 </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.11.0/math.min.js"></script>
 </head>
@@ -223,6 +275,10 @@ footer {
      <header>
     <h1>División Sintética de Polinomios</h1>
     <p class="subtitle">Soporta coeficientes y raíces reales y complejas</p>
+    <button onclick="window.location.href='file:///C:/Users/eruvi/OneDrive/Documentos/Universidad/Algebra/Git-Hub/Proyecto/Index.html'" 
+        class="btn-morado">
+    INICIO 
+</button>
 </header>
 
     <div class="container">
@@ -268,282 +324,7 @@ footer {
 
 <script>
     // Clase para manejar números complejos
-class NumeroComplejo {
-    constructor(real, imag = 0) {
-        this.real = real;
-        this.imag = imag;
-    }
 
-    sumar(otro) {
-        return new NumeroComplejo(
-            this.real + otro.real,
-            this.imag + otro.imag
-        );
-    }
-
-    multiplicar(otro) {
-        return new NumeroComplejo(
-            this.real * otro.real - this.imag * otro.imag,
-            this.real * otro.imag + this.imag * otro.real
-        );
-    }
-
-    toString() {
-        if (this.imag === 0) {
-            return this.real.toFixed(4).replace(/\.?0+$/, '');
-        }
-        
-        const realStr = this.real.toFixed(4).replace(/\.?0+$/, '');
-        const imagStr = Math.abs(this.imag).toFixed(4).replace(/\.?0+$/, '');
-        
-        if (this.real === 0) {
-            return `${imagStr}i`;
-        }
-        
-        const signo = this.imag >= 0 ? '+' : '-';
-        return `${realStr}${signo}${imagStr}i`;
-    }
-
-    esReal() {
-        return Math.abs(this.imag) < 1e-10;
-    }
-}
-
-// Función para parsear un polinomio en formato algebraico
-function parsearPolinomio(str) {
-    str = str.trim().replace(/\s/g, '');
-    
-    // Encontrar el grado máximo
-    const gradoMatch = str.match(/x\^(\d+)/g);
-    let gradoMax = 1;
-    
-    if (gradoMatch) {
-        gradoMax = Math.max(...gradoMatch.map(m => parseInt(m.match(/\d+/)[0])));
-    } else if (str.includes('x')) {
-        gradoMax = 1;
-    } else {
-        gradoMax = 0;
-    }
-    
-    // Inicializar array de coeficientes con ceros
-    const coeficientes = new Array(gradoMax + 1).fill(null).map(() => new NumeroComplejo(0));
-    
-    // Reemplazar términos implícitos
-    str = str.replace(/([+-])\s*x/g, '$1 1x');
-    str = str.replace(/^x/, '1x');
-    
-    // Extraer términos
-    const terminos = str.match(/[+-]?[^+-]+/g) || [];
-    
-    for (let termino of terminos) {
-        termino = termino.trim();
-        
-        if (!termino) continue;
-        
-        let coef, grado;
-        
-        if (!termino.includes('x')) {
-            // Término independiente
-            coef = parsearComplejo(termino);
-            grado = 0;
-        } else if (termino.includes('x^')) {
-            // Término con exponente explícito
-            const partes = termino.split('x^');
-            coef = partes[0] === '' || partes[0] === '+' ? new NumeroComplejo(1) : 
-                   partes[0] === '-' ? new NumeroComplejo(-1) : 
-                   parsearComplejo(partes[0]);
-            grado = parseInt(partes[1]);
-        } else {
-            // Término con x (grado 1)
-            const partes = termino.split('x');
-            coef = partes[0] === '' || partes[0] === '+' ? new NumeroComplejo(1) : 
-                   partes[0] === '-' ? new NumeroComplejo(-1) : 
-                   parsearComplejo(partes[0]);
-            grado = 1;
-        }
-        
-        const indice = gradoMax - grado;
-        coeficientes[indice] = coeficientes[indice].sumar(coef);
-    }
-    
-    return coeficientes;
-}
-
-// Función para parsear números complejos
-function parsearComplejo(str) {
-    str = str.trim().replace(/\s/g, '');
-    
-    if (!str.includes('i')) {
-        return new NumeroComplejo(parseFloat(str));
-    }
-
-    str = str.replace(/i/g, '');
-    
-    let real = 0;
-    let imag = 0;
-
-    const regex = /([+-]?\d*\.?\d+)([+-]\d*\.?\d+)?/;
-    const match = str.match(regex);
-
-    if (match) {
-        if (str.indexOf('+') > 0 || (str.indexOf('-') > 0 && str.indexOf('-') !== 0)) {
-            const partes = str.split(/(?=[+-])/);
-            real = parseFloat(partes[0]) || 0;
-            imag = parseFloat(partes[1]) || 1;
-        } else {
-            imag = parseFloat(str) || 1;
-        }
-    }
-
-    return new NumeroComplejo(real, imag);
-}
-
-// Función principal para calcular la división
-function calcularDivision() {
-    try {
-        const polinomioStr = document.getElementById('polinomio').value;
-        const raizStr = document.getElementById('raiz').value;
-
-        if (!polinomioStr || !raizStr) {
-            throw new Error('Por favor ingresa todos los datos');
-        }
-
-        const coeficientes = parsearPolinomio(polinomioStr);
-        const raiz = parsearComplejo(raizStr);
-
-        const resultado = divisionSintetica(coeficientes, raiz);
-        mostrarResultado(resultado, coeficientes, raiz, polinomioStr);
-
-    } catch (error) {
-        document.getElementById('resultado').innerHTML = `
-            <div class="error">
-                <strong>Error:</strong> ${error.message}
-            </div>
-        `;
-        document.getElementById('resultado').classList.add('show');
-    }
-}
-
-// Algoritmo de división sintética
-function divisionSintetica(coeficientes, raiz) {
-    const n = coeficientes.length;
-    const proceso = [];
-    const resultado = [];
-
-    proceso.push([...coeficientes]);
-    proceso.push([new NumeroComplejo(0)]);
-    
-    resultado.push(coeficientes[0]);
-    
-    for (let i = 1; i < n; i++) {
-        const producto = resultado[i - 1].multiplicar(raiz);
-        proceso[1].push(producto);
-        resultado.push(coeficientes[i].sumar(producto));
-    }
-
-    const cociente = resultado.slice(0, -1);
-    const residuo = resultado[resultado.length - 1];
-
-    return {
-        proceso: proceso,
-        resultado: resultado,
-        cociente: cociente,
-        residuo: residuo
-    };
-}
-
-// Función para mostrar el resultado en HTML
-function mostrarResultado(resultado, coeficientes, raiz, polinomioOriginal) {
-    let html = '<div class="result-title">Polinomio Original</div>';
-    html += '<div style="text-align: center; font-size: 1.2em; margin-bottom: 20px; padding: 15px; background: white; border: 1px solid #e0e0e0; border-radius: 4px;">';
-    html += '<strong>' + polinomioOriginal + '</strong>';
-    html += '</div>';
-
-    html += '<div class="result-title">Coeficientes Extraídos</div>';
-    html += '<table class="process-table" style="margin-bottom: 30px;">';
-    html += '<tr>';
-    for (let i = 0; i < coeficientes.length; i++) {
-        const exp = coeficientes.length - 1 - i;
-        html += '<td><strong>';
-        if (exp === 0) {
-            html += 'Término independiente';
-        } else if (exp === 1) {
-            html += 'x';
-        } else {
-            html += 'x<sup>' + exp + '</sup>';
-        }
-        html += '</strong></td>';
-    }
-    html += '</tr>';
-    html += '<tr>';
-    coeficientes.forEach(c => {
-        html += '<td>' + c.toString() + '</td>';
-    });
-    html += '</tr>';
-    html += '</table>';
-
-    html += '<div class="result-title">Proceso de División Sintética</div>';
-
-    html += '<table class="process-table">';
-    
-    html += '<tr><td class="divisor-cell">Divisor: ' + raiz.toString() + '</td>';
-    coeficientes.forEach(c => {
-        html += '<td>' + c.toString() + '</td>';
-    });
-    html += '</tr>';
-
-    html += '<tr><td class="divisor-cell">Multiplicar y bajar</td>';
-    resultado.proceso[1].forEach(p => {
-        html += '<td>' + p.toString() + '</td>';
-    });
-    html += '</tr>';
-
-    html += '<tr><td class="divisor-cell">Resultado (sumar)</td>';
-    resultado.resultado.forEach(r => {
-        html += '<td>' + r.toString() + '</td>';
-    });
-    html += '</tr>';
-
-    html += '</table>';
-
-    html += '<div class="final-result">';
-    html += '<p><strong>Cociente:</strong> ';
-    
-    let cocienteStr = '';
-    for (let i = 0; i < resultado.cociente.length; i++) {
-        const exp = resultado.cociente.length - 1 - i;
-        const coef = resultado.cociente[i];
-        
-        if (coef.real !== 0 || coef.imag !== 0) {
-            if (cocienteStr && (coef.real > 0 || (coef.real === 0 && coef.imag > 0))) {
-                cocienteStr += ' + ';
-            }
-            
-            cocienteStr += '(' + coef.toString() + ')';
-            
-            if (exp > 0) {
-                cocienteStr += 'x';
-                if (exp > 1) {
-                    cocienteStr += '<sup>' + exp + '</sup>';
-                }
-            }
-        }
-    }
-    
-    html += cocienteStr || '0';
-    html += '</p>';
-    
-    html += '<p><strong>Residuo:</strong> ' + resultado.residuo.toString() + '</p>';
-    
-    if (resultado.residuo.esReal() && Math.abs(resultado.residuo.real) < 1e-10) {
-        html += '<p style="color: #333; font-weight: 600;">✓ La división es exacta (residuo = 0)</p>';
-    }
-    
-    html += '</div>';
-
-    document.getElementById('resultado').innerHTML = html;
-    document.getElementById('resultado').classList.add('show');
-}
 </script>
 </body>
 </html>
